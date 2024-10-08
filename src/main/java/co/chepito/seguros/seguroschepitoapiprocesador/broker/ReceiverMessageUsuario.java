@@ -46,6 +46,9 @@ public class ReceiverMessageUsuario {
                     case "eliminacion":
                         usuarioRepositorio.deleteById(usuario.getId());
                         break;
+                    case "edicionparcial":
+                        usuarioRepositorio.save(usuarioMapperEntity.toEntity(usuario));
+                        break;
                 }
             });
         });
