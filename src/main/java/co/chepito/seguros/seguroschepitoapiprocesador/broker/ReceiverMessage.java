@@ -16,37 +16,37 @@ import java.util.UUID;
 @Component
 public class ReceiverMessage {
 
-    private final CotizacionRepository cotizacionRepository;
-    private final MapperJsonObjeto mapperJsonObjeto;
-    private final CotizacionMapperEntity cotizacionMapperEntity;
-
-
-
-    public ReceiverMessage(CotizacionRepository cotizacionRepository, MapperJsonObjeto mapperJsonObjeto, CotizacionMapperEntity cotizacionMapperEntity) {
-        this.cotizacionRepository = cotizacionRepository;
-        this.mapperJsonObjeto = mapperJsonObjeto;
-        this.cotizacionMapperEntity = cotizacionMapperEntity;
-    }
-
-    @RabbitListener(queues = "cotizacion")
-    public void receiveMessageCotizacion(String json)
-    {
-        Optional<MessageEvent> messageEvent = mapperJsonObjeto.ejecutar(json, MessageEvent.class);
-
-        messageEvent.ifPresent(msg -> {
-            Optional<CotizacionDomain> data = mapperJsonObjeto.ejecutarDesdeJson(msg.getMessage(), CotizacionDomain.class);
-            data.ifPresent(cotizacion -> {
-                switch (msg.getEvent()){
-                    case "creacion":
-                    case "actualizacion":
-                        System.out.println("Usuario: " + cotizacion.getUsuario().getId());
-                        cotizacionRepository.save(cotizacionMapperEntity.toEntity(cotizacion));
-                        break;
-                    case "eliminacion":
-                        cotizacionRepository.deleteById(cotizacion.getId());
-                        break;
-                }
-            });
-        });
-    }
+//    private final CotizacionRepository cotizacionRepository;
+//    private final MapperJsonObjeto mapperJsonObjeto;
+//    private final CotizacionMapperEntity cotizacionMapperEntity;
+//
+//
+//
+//    public ReceiverMessage(CotizacionRepository cotizacionRepository, MapperJsonObjeto mapperJsonObjeto, CotizacionMapperEntity cotizacionMapperEntity) {
+//        this.cotizacionRepository = cotizacionRepository;
+//        this.mapperJsonObjeto = mapperJsonObjeto;
+//        this.cotizacionMapperEntity = cotizacionMapperEntity;
+//    }
+//
+//    @RabbitListener(queues = "cotizacion")
+//    public void receiveMessageCotizacion(String json)
+//    {
+//        Optional<MessageEvent> messageEvent = mapperJsonObjeto.ejecutar(json, MessageEvent.class);
+//
+//        messageEvent.ifPresent(msg -> {
+//            Optional<CotizacionDomain> data = mapperJsonObjeto.ejecutarDesdeJson(msg.getMessage(), CotizacionDomain.class);
+//            data.ifPresent(cotizacion -> {
+//                switch (msg.getEvent()){
+//                    case "creacion":
+//                    case "actualizacion":
+//                        System.out.println("Usuario: " + cotizacion.getUsuario().getId());
+//                        cotizacionRepository.save(cotizacionMapperEntity.toEntity(cotizacion));
+//                        break;
+//                    case "eliminacion":
+//                        cotizacionRepository.deleteById(cotizacion.getId());
+//                        break;
+//                }
+//            });
+//        });
+//    }
 }
