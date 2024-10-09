@@ -18,6 +18,7 @@ public class ReceiverMessageUsuario {
     private final IUsuarioRepositorio usuarioRepositorio;
     private final MapperJsonObjeto mapperJsonObjeto;
     private final IUsuarioMapperEntity usuarioMapperEntity;
+    
 
 
 
